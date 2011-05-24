@@ -1,0 +1,8 @@
+name: Prevent Damage on Login
+main: net.thedarktide.celeo.preventdamageonlogin.PreventDamage
+author: Celeo
+version: 0.1
+commands:
+  PreventDamage:
+    description: Sets this plugin to on|off
+    usage: /<command>
