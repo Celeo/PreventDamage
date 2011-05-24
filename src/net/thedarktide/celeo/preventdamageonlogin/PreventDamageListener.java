@@ -1,18 +1,11 @@
 package net.thedarktide.celeo.preventdamageonlogin;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerListener;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Date;
 
 public class PreventDamageListener extends PlayerListener{
 	
@@ -28,15 +21,18 @@ public class PreventDamageListener extends PlayerListener{
 		Player player = event.getPlayer();
 		if(PreventDamage.isPreventing == true)
 		{
-			
+			timeMap.put(player, System.currentTimeMillis()*1000L*PreventDamage.timeToDelay);
 		}
 	}
 	
 	public void onEntityDamage(EntityDamageEvent event) {
-		Player defender = (Player)event.getEntity();
+		Player attacker = (Player)event.getEntity();
 		if(PreventDamage.isPreventing == true)
 		{
-			
+			if(timeMap.get(attacker) != null)
+			{
+				
+			}
 		}
 	}
 	

@@ -11,10 +11,6 @@ import org.bukkit.plugin.Plugin;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import java.util.logging.Logger;
 
 public class PreventDamage extends JavaPlugin {
@@ -23,6 +19,7 @@ public class PreventDamage extends JavaPlugin {
 	public static boolean isPreventing = true;
 	public final PreventDamageListener listener = new PreventDamageListener(this);
 	protected static PermissionHandler Permissions = null;
+	public static Long timeToDelay = (long) 3000;
 	
 	@Override
 	public void onDisable() {
@@ -65,7 +62,12 @@ public class PreventDamage extends JavaPlugin {
 		    		player.sendMessage("This plugin also takes the parameter [on|off]");
 		    	}
 		    }
-		    
+		    if(commandLabel.equalsIgnoreCase("settime") && Permissions.has(player, "preventdamege.settime")){
+		    	if(args.length == 0)
+		    	{
+		    		timeToDelay = Long.getLong(args[0]);
+		    	}
+		    }
 	    }
 	    return true;
 	}
