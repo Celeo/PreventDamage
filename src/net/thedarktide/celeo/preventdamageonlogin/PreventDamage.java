@@ -1,12 +1,12 @@
 package net.thedarktide.celeo.preventdamageonlogin;
 
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.ChatColor;
 
 import com.nijiko.permissions.PermissionHandler;
@@ -32,65 +32,51 @@ public class PreventDamage extends JavaPlugin {
 		setupPermissions();
 		PluginManager mngr = getServer().getPluginManager();
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.listener, Event.Priority.Normal, this);
+		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.listener, Event.Priority.Normal, this);
 	}
 	
 	private void printOut(String str){
 		log.info(str);
 	}
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) 
-	{
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		Player player = null;
 		String senderName = null;
-	    
-	    if (sender instanceof Player)
-	    {
-		    player = (Player)sender;
-		    senderName = player.getName();
-
-		    if(commandLabel.equalsIgnoreCase("setdelay"))// && Permissions.has(player, "preventdamage.setdelay"))
-		    {
-		    	if(args.length == 0)
-		    	{
-		    		PreventDamageListener.timeToDelay = Long.getLong(args[0]);
-		    	}
-		    }
-		    if(commandLabel.equalsIgnoreCase("preventdamge"))// && Permissions.has(player, "preventdamage.control"))
-		    {
-		    	if(args.length == 1)
-		    	{
-		    		if(!args[0].equalsIgnoreCase("off") && !args[0].equalsIgnoreCase("on"))
-		    		{
-		    			player.sendMessage(ChatColor.GRAY + "Unrecognized parameter");
-		    		}
-		    		if(args[0].equalsIgnoreCase("off"))
-		    		{
-		    			isPreventing = false;
-		    			displayState(player);
-		    		}
-		    		if(args[0].equalsIgnoreCase("on"))
-		    		{
-		    			isPreventing = true;
-		    			displayState(player);
-		    		}
-		    	}
-		    	else
-		    	{
-		    		if(isPreventing)
-		    		{
-		    			isPreventing = false;
-		    			displayState(player);
-		    		}
-		    		else if(!isPreventing)
-		    		{
-		    			isPreventing = true;
-		    			displayState(player);
-		    		}
-		    		player.sendMessage(ChatColor.RED + "This plugin also takes the parameter [on|off]");
-		    	}
-		    }
-	    }
-	    return true;
+		
+		if(sender instanceof Player)
+		{
+			player = (Player)sender;
+			senderName = player.getName();
+			
+			if(commandLabel.equalsIgnoreCase("preventdamage"))
+			{
+				if(args.length >= 0)
+				{
+					
+					if(args[0].equalsIgnoreCase("-set") && Permissions.has(player, "preventdamage.setdelay"))
+					{
+						PreventDamageListener.timeToDelay = Long.getLong(args[1]);
+//						player.sendMessage(ChatColor.GRAY + "Delay set to " + PreventDamageListener.timeToDelay.toString());
+					}
+					if(args[0].equalsIgnoreCase("-toggle") && Permissions.has(player, "preventdamage.toggle"))
+					{
+						if(args[1].equalsIgnoreCase("on"))
+						{
+							isPreventing = true;
+							displayState(player);
+						}
+						else if(args[1].equalsIgnoreCase("off"))
+						{
+							isPreventing = false;
+							displayState(player);
+						}
+					}
+					
+				}
+			}
+			
+		}
+		return true;
 	}
 	
 	public void displayState(Player player){

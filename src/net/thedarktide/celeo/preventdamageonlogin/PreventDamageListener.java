@@ -14,7 +14,6 @@ public class PreventDamageListener extends PlayerListener{
 	public HashMap<Player, Long> timeMap = new HashMap<Player, Long>(); 
 	public static Long timeToDelay = (long) 3000;
 	
-	
 	public PreventDamageListener(PreventDamage instance){
 		plugin = instance;
 	}
