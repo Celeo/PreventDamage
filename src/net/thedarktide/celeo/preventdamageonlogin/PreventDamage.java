@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.ChatColor;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -44,32 +45,54 @@ public class PreventDamage extends JavaPlugin {
 	    {
 		    player = (Player)sender;
 		    senderName = player.getName();
-		    
-		    if(commandLabel.equalsIgnoreCase("preventdamge") && Permissions.has(player, "preventdamage.control"));
-		    {
-		    	if(args.length >= 0)
-		    	{
-		    		if(isPreventing)
-		    			isPreventing = false;
-		    		else
-		    			isPreventing = true;
-		    		player.sendMessage("Damage Prevention set to " + isPreventing);
-		    	}
-		    	else
-		    	{
-		    		player.sendMessage("Damage Prevention toggled to " + isPreventing);
-		    		player.sendMessage("This plugin also takes the parameter [on|off]");
-		    	}
-		    }
-		    if(commandLabel.equalsIgnoreCase("settime") && Permissions.has(player, "preventdamege.settime"))
+
+		    if(commandLabel.equalsIgnoreCase("setdelay") && Permissions.has(player, "preventdamege.setdelay"))
 		    {
 		    	if(args.length == 0)
 		    	{
 		    		PreventDamageListener.timeToDelay = Long.getLong(args[0]);
 		    	}
 		    }
+		    if(commandLabel.equalsIgnoreCase("preventdamge") && Permissions.has(player, "preventdamage.control"))
+		    {
+		    	if(args.length >= 1)
+		    	{
+		    		if(!args[0].equalsIgnoreCase("off") && !args[0].equalsIgnoreCase("on"))
+		    		{
+		    			player.sendMessage(ChatColor.GRAY + "Unrecognized parameter");
+		    		}
+		    		if(args[0].equalsIgnoreCase("off"))
+		    		{
+		    			isPreventing = false;
+		    			displayState(player);
+		    		}
+		    		if(args[0].equalsIgnoreCase("on"))
+		    		{
+		    			isPreventing = true;
+		    			displayState(player);
+		    		}
+		    	}
+		    	else
+		    	{
+		    		if(isPreventing)
+		    		{
+		    			isPreventing = false;
+		    			displayState(player);
+		    		}
+		    		else if(!isPreventing)
+		    		{
+		    			isPreventing = true;
+		    			displayState(player);
+		    		}
+		    		player.sendMessage(ChatColor.RED + "This plugin also takes the parameter [on|off]");
+		    	}
+		    }
 	    }
 	    return true;
+	}
+	
+	public void displayState(Player player){
+		player.sendMessage(ChatColor.RED + "Damage Prevention " + ChatColor.GRAY + "toggled to " + isPreventing);
 	}
 	
 	public void setupPermissions() {

@@ -6,6 +6,6 @@ commands:
   PreventDamage:
     description: Sets this plugin to on|off
     usage: /<command>
-  SetTime:
+  SetDelay:
     description: Sets the amount of time for no damage after login
     usage: /<command> <time>
