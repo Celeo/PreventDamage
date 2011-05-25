@@ -55,8 +55,15 @@ public class PreventDamage extends JavaPlugin {
 					
 					if(args[0].equalsIgnoreCase("-set") && Permissions.has(player, "preventdamage.setdelay"))
 					{
-						PreventDamageListener.timeToDelay = Long.getLong(args[1]);
-//						player.sendMessage(ChatColor.GRAY + "Delay set to " + PreventDamageListener.timeToDelay.toString());
+						try
+						{
+							PreventDamageListener.timeToDelay = Long.parseLong(args[1]);
+						}
+						catch (NumberFormatException nfe)
+						{
+							player.sendMessage(ChatColor.GRAY + "You need to use a number. >.>");
+						}
+						player.sendMessage(ChatColor.GRAY + "Delay set to " + PreventDamageListener.timeToDelay.toString());
 					}
 					if(args[0].equalsIgnoreCase("-toggle") && Permissions.has(player, "preventdamage.toggle"))
 					{

@@ -8,4 +8,4 @@ commands:
     usage: /<command> <on|off>
   setdelay:
    description: Sets the amount of time before damage is allowed
-   usage: /<command> <time in milliseconds>
+   usage: /<command> <time in seconds>
