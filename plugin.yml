@@ -1,11 +1,11 @@
-name: Prevent Damage on Login
+name: PreventDamageOnLogin
 main: net.thedarktide.celeo.preventdamageonlogin.PreventDamage
 author: Celeo
 version: 1.0
 commands:
-  PreventDamage:
+  preventdamage:
     description: Sets this plugin to on|off
     usage: /<command>
-  SetDelay:
+  setdelay:
     description: Sets the amount of time for no damage after login
     usage: /<command> <time>

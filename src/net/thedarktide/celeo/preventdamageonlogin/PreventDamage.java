@@ -29,33 +29,35 @@ public class PreventDamage extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		log.info("[Damage Prevention on Player Login] <enabled>");
+		setupPermissions();
 		PluginManager mngr = getServer().getPluginManager();
-		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.listener, Event.Priority.Monitor, this);
+		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.listener, Event.Priority.Normal, this);
 	}
 	
 	private void printOut(String str){
 		log.info(str);
 	}
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) 
+	{
 		Player player = null;
-	    String senderName = null;
+		String senderName = null;
 	    
 	    if (sender instanceof Player)
 	    {
 		    player = (Player)sender;
 		    senderName = player.getName();
 
-		    if(commandLabel.equalsIgnoreCase("setdelay") && Permissions.has(player, "preventdamege.setdelay"))
+		    if(commandLabel.equalsIgnoreCase("setdelay"))// && Permissions.has(player, "preventdamage.setdelay"))
 		    {
 		    	if(args.length == 0)
 		    	{
 		    		PreventDamageListener.timeToDelay = Long.getLong(args[0]);
 		    	}
 		    }
-		    if(commandLabel.equalsIgnoreCase("preventdamge") && Permissions.has(player, "preventdamage.control"))
+		    if(commandLabel.equalsIgnoreCase("preventdamge"))// && Permissions.has(player, "preventdamage.control"))
 		    {
-		    	if(args.length >= 1)
+		    	if(args.length == 1)
 		    	{
 		    		if(!args[0].equalsIgnoreCase("off") && !args[0].equalsIgnoreCase("on"))
 		    		{
