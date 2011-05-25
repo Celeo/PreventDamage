@@ -19,7 +19,6 @@ public class PreventDamage extends JavaPlugin {
 	public static boolean isPreventing = true;
 	public final PreventDamageListener listener = new PreventDamageListener(this);
 	protected static PermissionHandler Permissions = null;
-	public static Long timeToDelay = (long) 3000;
 	
 	@Override
 	public void onDisable() {
@@ -62,10 +61,11 @@ public class PreventDamage extends JavaPlugin {
 		    		player.sendMessage("This plugin also takes the parameter [on|off]");
 		    	}
 		    }
-		    if(commandLabel.equalsIgnoreCase("settime") && Permissions.has(player, "preventdamege.settime")){
+		    if(commandLabel.equalsIgnoreCase("settime") && Permissions.has(player, "preventdamege.settime"))
+		    {
 		    	if(args.length == 0)
 		    	{
-		    		timeToDelay = Long.getLong(args[0]);
+		    		PreventDamageListener.timeToDelay = Long.getLong(args[0]);
 		    	}
 		    }
 	    }
@@ -83,7 +83,7 @@ public class PreventDamage extends JavaPlugin {
 	      } 
 	      else
 	      {
-	        log.info("[Damage Prevention on Player Login] version" + "0.1" + "requires Permissions, disabling...");
+	        log.info("[Damage Prevention on Player Login] version" + "1.0" + "requires Permissions, disabling...");
 	        getServer().getPluginManager().disablePlugin(this);
 	      }
 	  }

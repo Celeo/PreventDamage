@@ -12,6 +12,8 @@ public class PreventDamageListener extends PlayerListener{
 	public final PreventDamage plugin;
 	
 	public HashMap<Player, Long> timeMap = new HashMap<Player, Long>(); 
+	public static Long timeToDelay = (long) 3000;
+	
 	
 	public PreventDamageListener(PreventDamage instance){
 		plugin = instance;
@@ -21,7 +23,7 @@ public class PreventDamageListener extends PlayerListener{
 		Player player = event.getPlayer();
 		if(PreventDamage.isPreventing == true)
 		{
-			timeMap.put(player, System.currentTimeMillis()*1000L*PreventDamage.timeToDelay);
+			timeMap.put(player, System.currentTimeMillis()*1000L*timeToDelay);
 		}
 	}
 	
@@ -29,9 +31,9 @@ public class PreventDamageListener extends PlayerListener{
 		Player attacker = (Player)event.getEntity();
 		if(PreventDamage.isPreventing == true)
 		{
-			if(timeMap.get(attacker) != null)
+			if(timeMap.get(attacker) <= timeToDelay)
 			{
-				
+				event.setCancelled(true);
 			}
 		}
 	}
