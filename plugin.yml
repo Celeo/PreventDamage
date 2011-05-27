@@ -4,8 +4,5 @@ author: Celeo
 version: 1.0
 commands:
   preventdamage:
-    description: Turns the protection on or off
-    usage: /<command> <on|off>
-  setdelay:
-   description: Sets the amount of time before damage is allowed
-   usage: /<command> <time in seconds>
+    description: Commands
+    usage: /<command> <parameters>

@@ -30,13 +30,15 @@ import org.bukkit.ChatColor;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 public class PreventDamage extends JavaPlugin {
 	
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public static boolean isPreventing = true;
-	public final PreventDamageListener listener = new PreventDamageListener(this);
+	public LoginListener playerListener = new LoginListener(this);
+	public DamageListener entityListener = new DamageListener(this);
 	protected static PermissionHandler Permissions = null;
 	
 	@Override
@@ -49,12 +51,19 @@ public class PreventDamage extends JavaPlugin {
 		log.info("[Damage Prevention on Player Login] <enabled>");
 		setupPermissions();
 		PluginManager mngr = getServer().getPluginManager();
-		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.listener, Event.Priority.Normal, this);
-		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.listener, Event.Priority.Normal, this);
+		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
+		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
 	}
 	
 	private void printOut(String str){
 		log.info(str);
+	}
+	
+	private void debug(Player player, String str){
+		if(Util.isDebugging && player != null && str != null)
+		{
+			player.sendMessage(str);
+		}
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
@@ -70,18 +79,24 @@ public class PreventDamage extends JavaPlugin {
 			{
 				if(args.length >= 0)
 				{
-					
 					if(args[0].equalsIgnoreCase("-set") && Permissions.has(player, "preventdamage.setdelay"))
 					{
 						try
 						{
-							PreventDamageListener.timeToDelay = Long.parseLong(args[1]);
+							Util.timeToDelay = Long.parseLong(args[1])*1000L;
 						}
 						catch (NumberFormatException nfe)
 						{
 							player.sendMessage(ChatColor.GRAY + "You need to use a number. >.>");
 						}
-						player.sendMessage(ChatColor.GRAY + "Delay set to " + PreventDamageListener.timeToDelay.toString());
+						player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay.toString());
+					}
+					if(args[0].equalsIgnoreCase("seemap"))
+					{
+						for(Entry<Player, Long> str : Util.timeMap.entrySet())
+						{
+							player.sendMessage(str.getKey().getDisplayName() + " | " + str.getValue());
+						}
 					}
 					if(args[0].equalsIgnoreCase("-toggle") && Permissions.has(player, "preventdamage.toggle"))
 					{
@@ -96,7 +111,6 @@ public class PreventDamage extends JavaPlugin {
 							displayState(player);
 						}
 					}
-					
 				}
 			}
 			
@@ -105,7 +119,8 @@ public class PreventDamage extends JavaPlugin {
 	}
 	
 	public void displayState(Player player){
-		player.sendMessage(ChatColor.RED + "Damage Prevention " + ChatColor.GRAY + "toggled to " + isPreventing);
+		player.sendMessage(ChatColor.RED + "Damage Prevention " + ChatColor.GRAY + "toggled to "
+				+ ChatColor.GRAY + isPreventing);
 	}
 	
 	public void setupPermissions() {
