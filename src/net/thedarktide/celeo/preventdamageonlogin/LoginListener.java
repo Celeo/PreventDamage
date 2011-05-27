@@ -34,7 +34,7 @@ public class LoginListener extends PlayerListener {
 		Player player = event.getPlayer();
 		if(PreventDamage.isPreventing == true)
 		{
-			Util.timeMap.put(player, System.currentTimeMillis()*1000L*Util.timeToDelay);
+			Util.timeMap.put(player, System.currentTimeMillis()+Util.timeToDelay*1000L);
 			player.sendMessage("Current delay until damage is " + Util.timeToDelay/1000L + " seconds.");
 		}
 	}
