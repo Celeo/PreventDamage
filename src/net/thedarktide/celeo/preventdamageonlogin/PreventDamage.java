@@ -91,13 +91,6 @@ public class PreventDamage extends JavaPlugin {
 						}
 						player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay.toString());
 					}
-					if(args[0].equalsIgnoreCase("seemap"))
-					{
-						for(Entry<Player, Long> str : Util.timeMap.entrySet())
-						{
-							player.sendMessage(str.getKey().getDisplayName() + " | " + str.getValue());
-						}
-					}
 					if(args[0].equalsIgnoreCase("-toggle") && Permissions.has(player, "preventdamage.toggle"))
 					{
 						if(args[1].equalsIgnoreCase("on"))
