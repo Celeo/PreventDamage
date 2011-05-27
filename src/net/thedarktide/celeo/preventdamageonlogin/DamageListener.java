@@ -37,7 +37,6 @@ public class DamageListener extends EntityListener {
 				if(Util.timeMap.get(damager) >= Util.timeToDelay)
 				{
 					event.setDamage(0);
-					damager.sendMessage("Working");
 					event.setCancelled(true);
 				}
 			}
