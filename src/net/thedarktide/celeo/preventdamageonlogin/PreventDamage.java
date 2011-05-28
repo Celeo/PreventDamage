@@ -35,19 +35,18 @@ import java.util.logging.Logger;
 public class PreventDamage extends JavaPlugin {
 	
 	public static final Logger log = Logger.getLogger("Minecraft");
-	public static boolean isPreventing = true;
 	public LoginListener playerListener = new LoginListener(this);
 	public DamageListener entityListener = new DamageListener(this);
 	protected static PermissionHandler Permissions = null;
 	
 	@Override
 	public void onDisable() {
-		log.info("[Damage Prevention on Player Login] <disabled>");
+		log.info("[Damage Prevention on Player Login] " + "v 1.5" + " <disabled>");
 	}
 
 	@Override
 	public void onEnable() {
-		log.info("[Damage Prevention on Player Login] <enabled>");
+		log.info("[Damage Prevention on Player Login] " + "v 1.5" + " <enabled>");
 		setupPermissions();
 		PluginManager mngr = getServer().getPluginManager();
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
@@ -58,13 +57,11 @@ public class PreventDamage extends JavaPlugin {
 		if(sender instanceof Player)
 		{
 			Player player = (Player)sender;
-			//String senderName = player.getName();
-			
 			if(commandLabel.equalsIgnoreCase("preventdamage"))
 			{
 				if(args.length >= 0)
 				{
-					if(args[0].equalsIgnoreCase("-set") && Permissions.has(player, "preventdamage.setdelay"))
+					if((args[0].equalsIgnoreCase("-s") || args[0].equalsIgnoreCase("-set")) && Permissions.has(player, "preventdamage.setdelay"))
 					{
 						try
 						{
@@ -74,36 +71,16 @@ public class PreventDamage extends JavaPlugin {
 						{
 							player.sendMessage(ChatColor.GRAY + "You need to use a number. >.>");
 						}
-						player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay.toString());
-					}
-					if(args[0].equalsIgnoreCase("-toggle") && Permissions.has(player, "preventdamage.toggle"))
-					{
-						if(args[1].equalsIgnoreCase("on"))
-						{
-							isPreventing = true;
-							displayState(player);
-						}
-						else if(args[1].equalsIgnoreCase("off"))
-						{
-							isPreventing = false;
-							displayState(player);
-						}
+						player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay + " seconds.");
 					}
 				}
 			}
-			
 		}
 		return true;
 	}
 	
-	public void displayState(Player player){
-		player.sendMessage(ChatColor.RED + "Damage Prevention " + ChatColor.GRAY + "toggled to "
-				+ ChatColor.GRAY + isPreventing);
-	}
-	
 	public void setupPermissions() {
 	    Plugin test = getServer().getPluginManager().getPlugin("Permissions");
-
 	    if (Permissions == null)
 	      if (test != null)
 	      {
@@ -112,7 +89,7 @@ public class PreventDamage extends JavaPlugin {
 	      } 
 	      else
 	      {
-	        log.info("[Damage Prevention on Player Login] version" + "1.0" + "requires Permissions, disabling...");
+	        log.info("[Damage Prevention on Player Login] requires Permissions, disabling...");
 	        getServer().getPluginManager().disablePlugin(this);
 	      }
 	  }

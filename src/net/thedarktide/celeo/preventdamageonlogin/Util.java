@@ -26,9 +26,7 @@ public class Util{
 	
 	public static HashMap<Player, Long> timeMap = new HashMap<Player, Long>(); 
 	
-	public static Long timeToDelay = 10000L;
-	
-	public static boolean isDebugging = false;
+	public static Long timeToDelay = 3000L;
 	
 	public final PreventDamage plugin;
 	
