@@ -30,7 +30,6 @@ import org.bukkit.ChatColor;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 public class PreventDamage extends JavaPlugin {
@@ -55,25 +54,11 @@ public class PreventDamage extends JavaPlugin {
 		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
 	}
 	
-	private void printOut(String str){
-		log.info(str);
-	}
-	
-	private void debug(Player player, String str){
-		if(Util.isDebugging && player != null && str != null)
-		{
-			player.sendMessage(str);
-		}
-	}
-	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		Player player = null;
-		String senderName = null;
-		
 		if(sender instanceof Player)
 		{
-			player = (Player)sender;
-			senderName = player.getName();
+			Player player = (Player)sender;
+			//String senderName = player.getName();
 			
 			if(commandLabel.equalsIgnoreCase("preventdamage"))
 			{
