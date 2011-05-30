@@ -19,16 +19,10 @@
 package net.thedarktide.celeo.preventdamageonlogin;
 
 import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
-
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 import java.util.logging.Logger;
 
@@ -37,61 +31,30 @@ public class PreventDamage extends JavaPlugin {
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public LoginListener playerListener = new LoginListener(this);
 	public DamageListener entityListener = new DamageListener(this);
-	protected static PermissionHandler Permissions = null;
 	
 	@Override
 	public void onDisable() {
-		log.info("[Damage Prevention on Player Login] " + "v 1.5" + " <disabled>");
+		log.info("[Damage Prevention on Player Login] " + "v 1.8" + " <disabled>");
 	}
 
 	@Override
 	public void onEnable() {
-		log.info("[Damage Prevention on Player Login] " + "v 1.5" + " <enabled>");
-		setupPermissions();
+		log.info("[Damage Prevention on Player Login] " + "v 1.8" + " <enabled>");
 		PluginManager mngr = getServer().getPluginManager();
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
 		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
 	}
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if(sender instanceof Player)
+	public void setDelay(String[] args, Player player) {
+		try
 		{
-			Player player = (Player)sender;
-			if(commandLabel.equalsIgnoreCase("preventdamage"))
-			{
-				if(args.length >= 0)
-				{
-					if((args[0].equalsIgnoreCase("-s") || args[0].equalsIgnoreCase("-set")) && Permissions.has(player, "preventdamage.setdelay"))
-					{
-						try
-						{
-							Util.timeToDelay = Long.parseLong(args[1])*1000L;
-						}
-						catch (NumberFormatException nfe)
-						{
-							player.sendMessage(ChatColor.GRAY + "You need to use a number. >.>");
-						}
-						player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay + " seconds.");
-					}
-				}
-			}
+			Util.timeToDelay = Long.parseLong(args[1])*1000L;
 		}
-		return true;
+		catch (NumberFormatException nfe)
+		{
+			player.sendMessage(ChatColor.GRAY + "You need to use a number. >.>");
+		}
+		player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay + " seconds.");
 	}
-	
-	public void setupPermissions() {
-	    Plugin test = getServer().getPluginManager().getPlugin("Permissions");
-	    if (Permissions == null)
-	      if (test != null)
-	      {
-	        getServer().getPluginManager().enablePlugin(test);
-	        Permissions = ((Permissions)test).getHandler();
-	      } 
-	      else
-	      {
-	        log.info("[Damage Prevention on Player Login] requires Permissions, disabling...");
-	        getServer().getPluginManager().disablePlugin(this);
-	      }
-	  }
 
 }
