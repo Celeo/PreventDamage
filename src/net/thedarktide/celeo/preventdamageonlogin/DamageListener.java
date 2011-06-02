@@ -27,16 +27,26 @@ public class DamageListener extends EntityListener {
 	
 	public final PreventDamage plugin;
 	
+	Entity attacker = null;
+	Entity defender = null;
+	
 	public DamageListener(PreventDamage instance){
 		plugin = instance;
 	}
 	
+	//first method checks if the person doing damage is freshly logged in.
+	//if so, it cancels his/her damage
+	
+	//second method needs to give the newly logged in player
+	//the invulnerabilty for X number of seconds
+	
 	public void onEntityDamage(EntityDamageEvent event){
-		Entity attacker = null;
+		//check if player is doing damage
 		if(event instanceof EntityDamageByEntityEvent){
 			attacker = ((EntityDamageByEntityEvent)event).getDamager();
+			defender = event.getEntity();
 			
-			if(Util.timeMap.get(attacker) >= System.currentTimeMillis())
+			if(Util.timeMap.get(attacker) >= System.currentTimeMillis() || Util.timeMap.get(defender) >= System.currentTimeMillis())
 			{
 				event.setCancelled(true);
 			}

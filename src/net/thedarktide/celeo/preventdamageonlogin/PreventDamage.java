@@ -21,9 +21,6 @@ package net.thedarktide.celeo.preventdamageonlogin;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.entity.Player;
-import org.bukkit.ChatColor;
-
 import java.util.logging.Logger;
 
 public class PreventDamage extends JavaPlugin {
@@ -34,27 +31,15 @@ public class PreventDamage extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		log.info("[Damage Prevention on Player Login] " + "v 1.8" + " <disabled>");
+		log.info("[Damage Prevention on Player Login] <disabled>");
 	}
 
 	@Override
 	public void onEnable() {
-		log.info("[Damage Prevention on Player Login] " + "v 1.8" + " <enabled>");
+		log.info("[Damage Prevention on Player Login] <enabled>");
 		PluginManager mngr = getServer().getPluginManager();
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
 		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
 	}
 	
-	public void setDelay(String[] args, Player player) {
-		try
-		{
-			Util.timeToDelay = Long.parseLong(args[1])*1000L;
-		}
-		catch (NumberFormatException nfe)
-		{
-			player.sendMessage(ChatColor.GRAY + "You need to use a number. >.>");
-		}
-		player.sendMessage(ChatColor.GRAY + "Delay set to " + Util.timeToDelay + " seconds.");
-	}
-
 }
