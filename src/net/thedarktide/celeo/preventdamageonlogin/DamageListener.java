@@ -19,6 +19,7 @@
 package net.thedarktide.celeo.preventdamageonlogin;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
@@ -46,9 +47,16 @@ public class DamageListener extends EntityListener {
 			attacker = ((EntityDamageByEntityEvent)event).getDamager();
 			defender = event.getEntity();
 			
-			if(Util.timeMap.get(attacker) >= System.currentTimeMillis() || Util.timeMap.get(defender) >= System.currentTimeMillis())
+			if(Util.timeMap.get(attacker) >= System.currentTimeMillis())
 			{
 				event.setCancelled(true);
+			}
+			if(defender instanceof Player)
+			{
+				if(Util.timeMap.get(defender) >= System.currentTimeMillis())
+				{
+					event.setCancelled(true);
+				}
 			}
 		}
 	}

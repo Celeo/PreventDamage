@@ -1,7 +1,7 @@
 name: PreventDamageOnLogin
 main: net.thedarktide.celeo.preventdamageonlogin.PreventDamage
 author: Celeo
-version: 1.2
+version: 1.0
 commands:
   preventdamage:
     description: Commands
