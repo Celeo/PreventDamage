@@ -1,8 +1,21 @@
-Prevent Damage plugin for the DarkTide Minecraft SMP Sever.
-This plugin keeps players from exploiting the 3 seconds of invulnerability upon login into a SMP server,
-by keeping them from doing damage until the 3 seconds have passed.
+PreventDamage Plugin by Celeo
 
-The author of this plugin is Celeo.
-celeodor@gmail.com
+Created on May 24, 2011
 
-It was started on May 24, 2011
+	Copyright (C) 2011 Celeo <celeodor@gmail.com>
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+Features:
+* Prevents players from abusing the login invulnerabilty by preventing damage, taken or given, for 3 seconds.
