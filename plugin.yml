@@ -3,6 +3,6 @@ main: net.thedarktide.celeo.preventdamage.PreventDamage
 author: Celeo
 version: 1.0
 commands:
-  preventdamage:
+  pd:
     description: Commands
     usage: /<command> <parameters>

@@ -1,6 +1,6 @@
 /*
  * PreventDamageOnLogin
- * Copyright (C) 2010 Celeo <celeodor at gmail dot com>
+ * Copyright (C) 2011 Celeo <celeodor at gmail dot com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ public class Util{
 	public static HashMap<Player, Long> timeMap = new HashMap<Player, Long>(); 
 	
 	public static Long timeToDelay = 5000L;
+	public static boolean blockIncoming = true;
+	public static boolean blockOutgoing = true;
 	
 	public static PreventDamage plugin;
 	

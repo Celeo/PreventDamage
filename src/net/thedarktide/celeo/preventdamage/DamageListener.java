@@ -1,6 +1,6 @@
 /*
  * PreventDamageOnLogin
- * Copyright (C) 2010 Celeo <celeodor at gmail dot com>
+ * Copyright (C) 2011 Celeo <celeodor at gmail dot com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,28 +35,27 @@ public class DamageListener extends EntityListener {
 		plugin = instance;
 	}
 	
-	//first method checks if the person doing damage is freshly logged in.
-	//if so, it cancels his/her damage
-	
-	//second method needs to give the newly logged in player
-	//the invulnerabilty for X number of seconds
-	
 	public void onEntityDamage(EntityDamageEvent event){
-		//check if player is doing damage
 		if(event instanceof EntityDamageByEntityEvent){
 			attacker = ((EntityDamageByEntityEvent)event).getDamager();
 			defender = event.getEntity();
-			
-			if(Util.timeMap.get(attacker) >= System.currentTimeMillis())
+			try
 			{
-				event.setCancelled(true);
-			}
-			if(defender instanceof Player)
-			{
-				if(Util.timeMap.get(defender) >= System.currentTimeMillis())
+				if(Util.timeMap.get(attacker) >= System.currentTimeMillis())
 				{
 					event.setCancelled(true);
 				}
+				if(defender instanceof Player && Util.blockOutgoing == true)
+				{
+					if(Util.timeMap.get(defender) >= System.currentTimeMillis())
+					{
+						event.setCancelled(true);
+					}
+				}
+			}
+			catch(NullPointerException npe)
+			{
+				
 			}
 		}
 	}
