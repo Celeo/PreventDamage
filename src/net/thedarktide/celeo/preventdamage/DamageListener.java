@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.thedarktide.celeo.preventdamageonlogin;
+package net.thedarktide.celeo.preventdamage;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

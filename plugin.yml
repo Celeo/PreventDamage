@@ -1,5 +1,5 @@
-name: PreventDamageOnLogin
-main: net.thedarktide.celeo.preventdamageonlogin.PreventDamage
+name: PreventDamage
+main: net.thedarktide.celeo.preventdamage.PreventDamage
 author: Celeo
 version: 1.0
 commands:

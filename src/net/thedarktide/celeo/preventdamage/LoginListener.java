@@ -16,22 +16,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.thedarktide.celeo.preventdamageonlogin;
+package net.thedarktide.celeo.preventdamage;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerListener;
 
-import java.util.HashMap;
-
-public class Util{
+public class LoginListener extends PlayerListener {
 	
-	public static HashMap<Player, Long> timeMap = new HashMap<Player, Long>(); 
+	public final PreventDamage plugin;
 	
-	public static Long timeToDelay = 10000L;
-	
-	public static PreventDamage plugin;
-	
-	public Util(PreventDamage instance){
+	public LoginListener(PreventDamage instance){
 		plugin = instance;
+	}
+	
+	public void onPlayerJoin(PlayerEvent event){
+		Player player = event.getPlayer();
+		Util.timeMap.put(player, System.currentTimeMillis()+Util.timeToDelay);
 	}
 	
 }

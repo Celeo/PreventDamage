@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.thedarktide.celeo.preventdamageonlogin;
+package net.thedarktide.celeo.preventdamage;
 
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
@@ -31,15 +31,26 @@ public class PreventDamage extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		log.info("[Damage Prevention on Player Login] <disabled>");
+		log.info("[Damage Prevention] <disabled>");
+		Util.config.setProperty("time", Util.timeToDelay);
+		Util.config.save();
 	}
 
 	@Override
 	public void onEnable() {
-		log.info("[Damage Prevention on Player Login] <enabled>");
+		log.info("[Damage Prevention] <enabled>");
 		PluginManager mngr = getServer().getPluginManager();
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
 		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
+		Util.load(this);
+		Util.timeToDelay = (Long.getLong(Util.config.getProperty("time").toString()));
+		if(Util.timeToDelay == null || Util.timeToDelay == 0)
+		{
+			Util.timeToDelay = 5000L;
+			Util.config.setProperty("time", Util.timeToDelay);
+			Util.config.save();
+		}
+		log.info("[PreventDamage] time to delay set to: " + Util.timeToDelay + " milliseconds.");
 	}
 	
 }
