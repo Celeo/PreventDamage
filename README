@@ -18,4 +18,4 @@ Created on May 24, 2011
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Features:
-* Prevents players from abusing the login invulnerabilty by preventing damage, taken or given, for 3 seconds.
+* Prevents players from abusing the login invulnerabilty by preventing damage, taken or given, for X seconds.
