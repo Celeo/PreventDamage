@@ -11,6 +11,7 @@ public class PreventDamage extends JavaPlugin {
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public LoginListener playerListener = new LoginListener(this);
 	public DamageListener entityListener = new DamageListener(this);
+	public LogoutListener outlistener = new LogoutListener(this);
 	
 	@Override
 	public void onDisable() {
@@ -24,6 +25,7 @@ public class PreventDamage extends JavaPlugin {
 		PluginManager mngr = getServer().getPluginManager();
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
 		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
+		mngr.registerEvent(Event.Type.PLAYER_QUIT, this.outlistener, Event.Priority.Normal, this);
 		Util.loadAll(this);
 		log.info("[PreventDamage] time to delay set to: " + Util.timeToDelay + " milliseconds.");
 	}

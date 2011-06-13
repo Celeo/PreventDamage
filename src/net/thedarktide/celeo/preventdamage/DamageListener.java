@@ -13,15 +13,15 @@ public class DamageListener extends EntityListener {
 	Entity attacker = null;
 	Entity defender = null;
 	
-	public DamageListener(PreventDamage instance){
+	public DamageListener(PreventDamage instance) {
 		plugin = instance;
 	}
 	
-	public void onEntityDamage(EntityDamageEvent event){
-		if(event instanceof EntityDamageByEntityEvent){
+	public void onEntityDamage(EntityDamageEvent event) {
+		if(event instanceof EntityDamageByEntityEvent) {
 			attacker = ((EntityDamageByEntityEvent)event).getDamager();
 			defender = event.getEntity();
-			try
+			if(Util.timeMap.containsKey(attacker))
 			{
 				if((Util.timeMap.get(attacker) >= System.currentTimeMillis()) && Util.blockIncoming == true)
 				{
@@ -34,10 +34,6 @@ public class DamageListener extends EntityListener {
 						event.setCancelled(true);
 					}
 				}
-			}
-			catch(NullPointerException npe)
-			{
-				//*shrug*
 			}
 		}
 	}
