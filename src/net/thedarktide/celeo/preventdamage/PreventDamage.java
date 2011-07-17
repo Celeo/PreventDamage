@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class PreventDamage extends JavaPlugin {
 	
-	public static final Logger log = Logger.getLogger("Minecraft");
+	public Logger log = Logger.getLogger("Minecraft");
 	public LoginListener playerListener = new LoginListener(this);
 	public DamageListener entityListener = new DamageListener(this);
 	public LogoutListener outlistener = new LogoutListener(this);
@@ -16,7 +16,7 @@ public class PreventDamage extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		log.info("[Damage Prevention] <disabled>");
-		Util.saveAll();
+//		Util.saveAll();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class PreventDamage extends JavaPlugin {
 		mngr.registerEvent(Event.Type.PLAYER_JOIN, this.playerListener, Event.Priority.Normal, this);
 		mngr.registerEvent(Event.Type.ENTITY_DAMAGE, this.entityListener, Event.Priority.Normal, this);
 		mngr.registerEvent(Event.Type.PLAYER_QUIT, this.outlistener, Event.Priority.Normal, this);
-		Util.loadAll(this);
+//		Util.loadAll(this);
 		log.info("[PreventDamage] time to delay set to: " + Util.timeToDelay + " milliseconds.");
 	}
 	

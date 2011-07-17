@@ -1,5 +1,5 @@
 name: PreventDamage
 main: net.thedarktide.celeo.preventdamage.PreventDamage
 author: Celeo
-version: 1.5
+version: 1.6
 description: Prevents players from taking advantage of the login invulnerabilty by preventing them from doing damage during that time.

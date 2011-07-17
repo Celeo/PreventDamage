@@ -46,7 +46,7 @@ public class Util {
 		Util.config.setProperty("block.incoming", blockOutgoing);
 		Util.config.setProperty("block.outgoing", blockOutgoing);
 		config.save();
-		PreventDamage.log.info("[Prevent Damage] settings saved");
+		plugin.log.info("[Prevent Damage] settings saved");
 	}
 	
 }

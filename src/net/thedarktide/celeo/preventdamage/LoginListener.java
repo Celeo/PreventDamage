@@ -14,7 +14,7 @@ public class LoginListener extends PlayerListener {
 	
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		Util.timeMap.put(player, System.currentTimeMillis()+Util.timeToDelay);
+		Util.timeMap.put(player, System.currentTimeMillis() + Util.timeToDelay);
 	}
 	
 }
