@@ -3,18 +3,27 @@ package net.thedarktide.celeo.preventdamage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-public class LoginListener extends PlayerListener {
+public class LogListener extends PlayerListener{
 	
-	public final PreventDamage plugin;
+	PreventDamage plugin;
 	
-	public LoginListener(PreventDamage instance) {
+	public LogListener(PreventDamage instance) {
 		plugin = instance;
 	}
 	
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		Util.timeMap.put(player, System.currentTimeMillis() + Util.timeToDelay);
+	}
+	
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		Player player = event.getPlayer();
+		if(Util.timeMap.containsKey(player))
+		{
+			Util.timeMap.remove(player);
+		}
 	}
 	
 }

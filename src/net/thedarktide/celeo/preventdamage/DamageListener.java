@@ -21,17 +21,19 @@ public class DamageListener extends EntityListener {
 		if(event instanceof EntityDamageByEntityEvent) {
 			attacker = ((EntityDamageByEntityEvent)event).getDamager();
 			defender = event.getEntity();
-			if(Util.timeMap.containsKey(attacker))
+			if(Util.timeMap.containsKey(attacker) && Util.timeMap.containsKey(defender))
 			{
 				if((Util.timeMap.get(attacker) >= System.currentTimeMillis()) && Util.blockIncoming == true)
 				{
 					event.setCancelled(true);
+					return;
 				}
 				if(defender instanceof Player && Util.blockOutgoing == true)
 				{
 					if(Util.timeMap.get(defender) >= System.currentTimeMillis())
 					{
 						event.setCancelled(true);
+						return;
 					}
 				}
 			}
